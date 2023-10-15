@@ -1,0 +1,68 @@
+.container {
+    box-sizing: border-box; /* Inclut la bordure dans la largeur/hauteur totale */
+    width: 100%; /* Largeur de 100% de son conteneur parent */
+    max-width: 80%; /* Ne dépasse pas la largeur du conteneur parent */
+    margin: 0 auto; /* Centrer horizontalement en définissant automatiquement les marges gauche et droite */
+    padding: 0; /* Padding de 0 pour supprimer les rembourrages intérieurs */
+  }
+
+  .containerEvent {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start; 
+    gap : 20px
+}
+
+.buttonContainer {
+    display: flex;
+    justify-content: center; /* Horizontally center the contents */
+    align-items: center; /* Vertically center the contents if needed */
+    margin-top: 10px;
+    gap : 5px
+}
+
+.buttonContainer > button {
+    border-radius: 4px;
+    border: 1px solid #DFE0EB ;
+    cursor: pointer;
+    color: #667085;
+    font-size: 16px;
+    font-family: 'Inter-Bold';
+}
+
+
+.choiceButton {
+    background-color: #3498db;
+    color: white;
+    padding: 5px;
+    border: 1px solid #3498db ;
+    border-radius: 4px;
+}
+
+.nochoiceButton{
+    padding: 5px;
+    border: 1px solid #DFE0EB ;
+    border-radius: 4px;
+}
+
+.addButton {
+    padding: 5px;
+    background-color: #27AE60;
+    color: white ;
+    border : 1px solid white ; 
+    border-radius: 4px;
+}
+
+.displayPopup {
+    background-color: #08d;
+    border-radius: 12px;
+    border: 0;
+    box-sizing: border-box;
+    color: #eee;
+    cursor: pointer;
+    font-size: 18px;
+    height: 50px;
+    text-align: center;
+    width: 160px;
+    margin-right: 70px;
+}

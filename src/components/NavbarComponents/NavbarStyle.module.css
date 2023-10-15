@@ -1,0 +1,35 @@
+.containerNavbar {
+    display: flex;
+    justify-content: flex-start; /* Ajustez ceci selon vos besoins */
+    gap: 40px;
+    background-color:#15172b;
+    box-shadow: 0px 0px 10px rgba(102, 112, 133, 0.15);
+    border-radius: 8px;
+    border: 1px solid #15172b;
+}
+
+.containerNavbar > a:last-child {
+    margin-left: auto;
+}
+
+.containerNavbar > a {
+    width: 100px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 16px;
+    color: inherit;
+    text-decoration: none;
+}
+
+.containerNavbar > a:hover p {
+    color: #1992A6;
+}
+
+.containerNavbar > a {
+    color: #667085;
+    font-size: 14px;
+    font-family: 'Inter', sans-serif;
+    cursor: pointer;
+}
