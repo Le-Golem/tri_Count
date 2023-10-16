@@ -3,17 +3,30 @@ import { ITransaction } from "@/core/model/ITransaction"
 import transactionService from "@/core/services/transactionService"
 import { useEffect, useState } from "react"
 import styles from "./transaction-page-components.module.css"
+import { IToken } from "@/core/model/IToken"
 
 const TransactionsPageComponents = () => {
 
     const [transactionList , setTransactionslist] : [transactionslist : ITransaction[] , setTransactionsList : Function] = useState([])
+    const [token, setToken]: [IToken | undefined, React.Dispatch<React.SetStateAction<IToken | undefined>>] = useState<IToken | undefined>(
+        JSON.parse(localStorage.getItem('token') || 'null')
+      );
 
-    useEffect(() => {
-        transactionService.getAll().then(res => setTransactionslist(res))
-    } , [])
+      useEffect(() => {
+        const storedToken = JSON.parse(localStorage.getItem('token') || 'null');
+        if (storedToken && storedToken !== token) {
+          setToken(storedToken);
+        }
+
+        if (token){
+            transactionService.getUserById(token.sub).then(res => {
+                if (res) {
+                    setTransactionslist(res);
+                }
+            });}
+      }, []);
 
     const handleClick = (transaction: ITransaction) => {
-        // Faites quelque chose avec l'objet transaction lorsque la ligne est cliquée
         console.log('Transaction cliquée :', transaction);
     };
 
@@ -22,7 +35,7 @@ const TransactionsPageComponents = () => {
         <section style={{ width : "100%" , height : "100%"}}>
             <div>
                 <h1>Liste des Transactions</h1>
-                <table className={styles.tableStyle}> {/* Ajoutez une classe CSS pour le style du tableau */}
+                <table className={styles.tableStyle}>
                     <thead>
                         <tr>
                             <th>Label</th>

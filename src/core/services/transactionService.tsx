@@ -34,6 +34,17 @@ export class TransactionService {
             console.error('Error:', error);
         }
     }
+
+    async getUserById(userId: number) {
+        try {
+            const response = await axios.get(`${this.url}/${userId}`);
+            return response.data;
+        } catch (error) {
+            console.error('Error fetching user data:', error);
+            throw error;
+        }
+    }
+    
 }
 
 const transactionService = new TransactionService()

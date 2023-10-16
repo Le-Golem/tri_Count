@@ -2,7 +2,6 @@ import { IEvent } from "@/core/model/IEvent"
 import styles from "./event-page-details.module.css"
 
 const EventPageDetails = ({event , setDisplayDetails} : {event : IEvent , setDisplayDetails : Function}) => {
-    console.log(event)
     const fakeEventData = {
         Label: 'Événement',
         description: 'Description de l\'événement',
