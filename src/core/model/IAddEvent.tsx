@@ -1,8 +1,6 @@
-import { IUser } from "./IUser";
-
 export interface IAddEvent {
-    Label : string , 
+    label : string , 
     description : string , 
-    users : IUser[] | null , 
+    usersToParticipate : number[] | null , 
     isActive : boolean , 
 }

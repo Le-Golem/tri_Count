@@ -1,12 +1,22 @@
 import axios from "axios";
 import { IAddUser } from "../model/IAddUser";
+import { IUser } from "../model/IUser";
 
 export class UserService {
     private readonly url: string = "http://localhost:3001";
 
-    async getAll() {
+    async getAllUsers(){
         try {
-            const response = await axios.get(`${this.url}/users`)
+            const response = await axios.get(this.url + "/users");
+            return response.data
+        } catch (error) {
+            return "error"
+        }
+    }
+
+    async getUserById(userId : number) {
+        try {
+            const response = await axios.get(`${this.url}/users/${userId}`)
             return response.data
         } catch (error) {
             console.error("Error fetching data:", error);

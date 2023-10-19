@@ -7,7 +7,7 @@ import DisplayUserInput from "@/components/displayUserInput";
 import userService from "@/core/services/userService";
 import eventService from "@/core/services/eventService";
 
-const EventAddPopup = ({setDisplyPopupAddForm , setTrigger , trigger} : {setDisplyPopupAddForm : Function , setTrigger : Function , trigger : boolean }) => {
+const EventAddPopup = ({setDisplyPopupAddForm , setTrigger , trigger , refreshUserConnected} : {setDisplyPopupAddForm : Function , setTrigger : Function , trigger : boolean , refreshUserConnected : Function}) => {
 
     const [label , setLabel] : [label : string  , setLabel : Function] = useState("")
     const [description , setDescription] : [description : string  , setDescription : Function] = useState("")
@@ -18,14 +18,14 @@ const EventAddPopup = ({setDisplyPopupAddForm , setTrigger , trigger} : {setDisp
     const [userSelected , setUserSelected] : [userSelected : IUser[] , setUserSelected : Function] = useState([])
 
     useEffect(() => {
-        userService.getAll().then(res => setUserList(res))
-    }, [])
-
-    useEffect(() => {
         if (userChoice !== undefined && userChoice !== null) {
             setUserSelected((prevUserSelected : IUser[]) => [...prevUserSelected, userChoice]);
         }
     }, [userChoice]);
+
+    useEffect(() => {
+        userService.getAllUsers().then(res => setUserList(res))
+    }, []);
 
     const handleLabelChange = (event : any) => {
         setLabel(event.target.value); 
@@ -38,16 +38,28 @@ const EventAddPopup = ({setDisplyPopupAddForm , setTrigger , trigger} : {setDisp
     }
 
     const sendForm = () => {
-        const IEventToCreate: IAddEvent = {
-            Label: label,
+        const tempoUserId = userSelected.map(user => user.userId);
+
+
+        if (typeof label !== 'string' || typeof description !== 'string') {
+            alert("Le label et la description doivent être des chaînes de caractères valides.");
+            return;
+        }
+        if (tempoUserId.length === 0) {
+            alert("Veuillez sélectionner au moins un utilisateur.");
+            return;
+        }
+
+        const IEventToCreate : IAddEvent = {
+            label: label,
             description: description,
-            users: userSelected,
+            usersToParticipate: tempoUserId,
             isActive: true
         };
-
-        if (label != "" && description != "" && userSelected.length != 0 ){
+    
+        if (label.length != 0 && description.length != 0 && userSelected.length != 0 ){
             eventService.create(IEventToCreate).then(res => console.log(res))
-            setTrigger(trigger)
+            refreshUserConnected()
             setDisplyPopupAddForm(false)
         }else {
             alert("Veuillez indiqué toutes les informations")
@@ -59,7 +71,6 @@ const EventAddPopup = ({setDisplyPopupAddForm , setTrigger , trigger} : {setDisp
         updatedUsers.splice(index, 1);
         setUserSelected(updatedUsers);
     }
-
     
     return(
         <>

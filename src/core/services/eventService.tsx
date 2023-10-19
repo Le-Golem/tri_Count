@@ -14,27 +14,28 @@ export class EventService {
         }
     }
 
-    async create(event : IAddEvent) {
+    async getByEventId(eventId : number) {
         try {
-            const response = await fetch('http://localhost:3001/event', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json', 
-                },
-                body: JSON.stringify(event),
-            });
-    
-            if (!response.ok) {
-                throw new Error('Failed to create the event');
-            }
-    
-            const responseData = await response.json();
-            console.log('Event created:', responseData);
+            const response = await axios.get(`${this.url}/events/${eventId}?eventId=${eventId}`);
+            return response.data; 
+        } catch (error) {
+            console.error("Error fetching data:", error);
+            throw error; 
+        }
+    }
+
+
+    async create(event: IAddEvent) {
+        try {
+            const response = await axios.post(`${this.url}/events`, event);
+            return response;
         } catch (error) {
             console.error('Error:', error);
+            throw error; // N'oubliez pas de relancer l'erreur pour qu'elle puisse être capturée à l'endroit où vous appelez cette fonction.
         }
     }
 }
+
 
 const eventService = new EventService();
 

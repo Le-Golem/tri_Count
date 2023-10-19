@@ -1,10 +1,10 @@
+import { IEvent } from "./IEvent";
+import { IParticipate } from "./IParticipate";
+
 export interface IUser {
     userId : number ,
     username : string ,
-    password : string , 
-    enabled : number , 
-    authority : string , 
-    boolmdp : boolean , 
-    photo : string , 
+    password : string ,  
     email : string , 
+    participate: IParticipate[]
 }
