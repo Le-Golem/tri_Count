@@ -1,0 +1,41 @@
+/* Dans homepage.css */
+.homepage-container {
+    text-align: center;
+    padding: 50px;
+    background-color: #15172b; 
+    overflow: hidden;
+    border-radius: 15px; 
+    box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.75);
+    height: 80%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+  
+.homepage-title {
+    font-size: 36px;
+    margin-bottom: 20px;
+    color: #fff;
+}
+  
+.homepage-description {
+    font-size: 18px;
+    margin-bottom: 30px;
+    color: #ccc;
+}
+  
+.homepage-button {
+    font-size: 20px;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.homepage-button:hover {
+    background-color: #45a049;
+    box-shadow: 0px 4px 6px 0px rgba(0,0,0,0.75);
+}

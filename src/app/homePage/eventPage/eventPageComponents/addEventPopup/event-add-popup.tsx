@@ -6,16 +6,46 @@ import { IUser } from "@/core/model/IUser";
 import DisplayUserInput from "@/components/displayUserInput";
 import userService from "@/core/services/userService";
 import eventService from "@/core/services/eventService";
+import { IToken } from "@/core/model/IToken";
 
 const EventAddPopup = ({setDisplyPopupAddForm , setTrigger , trigger , refreshUserConnected} : {setDisplyPopupAddForm : Function , setTrigger : Function , trigger : boolean , refreshUserConnected : Function}) => {
 
+    const [userConnected, setUserConnected] : [IUser | undefined, setUserList : Function] = useState()
     const [label , setLabel] : [label : string  , setLabel : Function] = useState("")
     const [description , setDescription] : [description : string  , setDescription : Function] = useState("")
     const [users , setUsers] : [users : IUser[] , setUsers : Function] = useState([])
     const [displayUserInput , setDisplayUserInput] : [displayUserInput : boolean , setDisplayUserInput : Function] = useState(false)
     const [userList , setUserList] : [userList : IUser[] , setUserList : Function] = useState([])
     const [userChoice , setUserChoice] : [userChoice : IUser | undefined , setUserChoice : Function] = useState()
+    const [token, setToken] : [token : IToken | undefined, setToken : Function] = useState();
     const [userSelected , setUserSelected] : [userSelected : IUser[] , setUserSelected : Function] = useState([])
+    
+    useEffect(() => {
+        const storedToken = localStorage.getItem('token');
+        if (storedToken) {
+            const parsedToken: IToken = JSON.parse(storedToken);
+            setToken(parsedToken);
+    
+            if (parsedToken && parsedToken.sub) {
+                const tempoId = parsedToken.sub;
+                userService.getUserById(tempoId).then((res) => {
+                    setUserConnected(res);
+    
+                    if (res && res.userId) {
+                        setUserSelected([res]);
+                    }
+                });
+            }
+        }
+    }, []);
+
+    useEffect(() => {
+        if (token) {
+            const tempoId = token.sub;
+            userService.getUserById(tempoId).then(res => {setUserConnected(res)});
+        }
+    }, [token]);
+
 
     useEffect(() => {
         if (userChoice !== undefined && userChoice !== null) {
@@ -66,12 +96,26 @@ const EventAddPopup = ({setDisplyPopupAddForm , setTrigger , trigger , refreshUs
         }
     }
 
-    function handleDelete(index : number) {
-        const updatedUsers = [...userSelected];
-        updatedUsers.splice(index, 1);
-        setUserSelected(updatedUsers);
-    }
+    useEffect(() => {
+        const filteredUserList = userList.filter(user => !userSelected.some(selectedUser => selectedUser.userId === user.userId));
+        setUserList(filteredUserList);
+    }, [userSelected]);
     
+    const handleDelete = (index: number) => {
+        // Vérifier si l'utilisateur actuel est dans la liste userSelected
+        const currentUserIndex = userSelected.findIndex(user => user.userId === userConnected?.userId);
+    
+        // Vérifier si l'utilisateur actuel est en train d'être supprimé
+        if (currentUserIndex !== -1 && currentUserIndex === index) {
+            alert("Vous ne pouvez pas vous supprimer de la liste.");
+            return;
+        }
+    
+        const updatedUserSelected = [...userSelected];
+        const removedUser = updatedUserSelected.splice(index, 1)[0];
+        setUserList((prevUserList : IUser[]) => [...prevUserList, removedUser]);
+        setUserSelected(updatedUserSelected);
+    };
     return(
         <>
         <figure onClick={() => setDisplyPopupAddForm(false)} className={styles.backGroud} />
@@ -97,13 +141,15 @@ const EventAddPopup = ({setDisplyPopupAddForm , setTrigger , trigger , refreshUs
                     </div>
                     
                     <div>
-                        {userSelected.length != 0 ? <p>Participants</p> : "" } 
-                        <ul style={{marginTop : "15px" , position : "fixed" , maxHeight : "35vh" , overflow : "auto" , width : "20vh"}}>
-                            {userSelected.map((user, index) => (
-                            <li style={{marginTop : "5px"}} key={user.userId}>
-                                {user.username}
-                                <button style={{marginLeft : '5px'}} onClick={() => handleDelete(index)}>X</button>
-                            </li>
+                        <ul style={{ margin : "15px 45px 0px 0px", position: "fixed", maxHeight: "35vh", overflow: "auto", width: "25vh", listStyleType: "none", padding: 0 }}>
+                        <h1 style={{ fontSize: "20px", fontWeight: "bold", marginBottom: "10px", borderBottom: "2px solid #333", paddingBottom: "5px" }}>Participants</h1>                            {userSelected.map((user, index) => (
+                                <li style={{ marginTop: "5px", padding: "10px", borderBottom: "1px solid #ccc" }} key={user.userId}>
+                                    <span style={{ marginRight: "10px" }}>{user.username}</span>
+                                    {/* Afficher le bouton de suppression uniquement si l'utilisateur n'est pas l'utilisateur connecté */}
+                                    {user.userId !== userConnected?.userId && (
+                                        <button style={{ marginLeft: '5px', padding: "5px 10px", background: "#ff5858", color: "#fff", border: "none", cursor: "pointer", borderRadius: "5px" }} onClick={() => handleDelete(index)}>Supprimer</button>
+                                    )}
+                                </li>
                             ))}
                         </ul>
                     </div>

@@ -1,15 +1,16 @@
 .containerNavbar {
     display: flex;
-    justify-content: flex-start; /* Ajustez ceci selon vos besoins */
+    flex-direction: column;
     gap: 40px;
-    background-color:#15172b;
-    box-shadow: 0px 0px 10px rgba(102, 112, 133, 0.15);
+    background-color: #15172b;
     border-radius: 8px;
     border: 1px solid #15172b;
+    padding: 20px; 
+    height: 100%;
 }
 
 .containerNavbar > a:last-child {
-    margin-left: auto;
+    margin-top: auto; 
 }
 
 .containerNavbar > a {
@@ -18,18 +19,18 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-left: 16px;
     color: inherit;
     text-decoration: none;
+    cursor: pointer;
+    transition: color 0.3s ease;
 }
 
-.containerNavbar > a:hover p {
+.containerNavbar > a:hover {
     color: #1992A6;
 }
 
-.containerNavbar > a {
-    color: #667085;
+.containerNavbar > a p {
+    margin: 0; /* Supprime la marge par défaut du paragraphe */
     font-size: 14px;
     font-family: 'Inter', sans-serif;
-    cursor: pointer;
 }

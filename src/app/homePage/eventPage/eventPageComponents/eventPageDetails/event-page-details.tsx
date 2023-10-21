@@ -1,14 +1,12 @@
 import { IEvent } from "@/core/model/IEvent"
 import styles from "./event-page-details.module.css"
 import { useEffect, useState } from "react"
-import { IEventWithUser } from "@/core/model/IeventWithUser"
-import userService from "@/core/services/userService"
 import eventService from "@/core/services/eventService"
+import { IEventWithUser } from "@/core/model/IEventWithUser"
 
 const EventPageDetails = ({event , setDisplayDetails} : {event : IEvent , setDisplayDetails : Function}) => {
 
     const [eventUserList, setEventUserList] : [ eventUserList :IEventWithUser | undefined, setEventUserList : Function] = useState()
-    console.log("🚀 ~ file: event-page-details.tsx:11 ~ EventPageDetails ~ eventUserList:", eventUserList)
 
     useEffect(() => {
         eventService.getByEventId(event.eventId).then(event => {setEventUserList(event)})
@@ -24,7 +22,7 @@ const EventPageDetails = ({event , setDisplayDetails} : {event : IEvent , setDis
                     </div>
                     <div style={{display : "flex" , gap: "20px" , width : "300px" , marginRight : "16px"}}>
                         <button className={styles.submit}>Historique des transactions</button>
-                        <button className={styles.submitConfirm}>Ajouter une transactions</button>
+                        <button className={styles.submitConfirm}>Ajouter une transaction</button>
                     </div>
                 </article>
                 <div style={{display : "flex"}}>

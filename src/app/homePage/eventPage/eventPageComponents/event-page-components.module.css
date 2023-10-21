@@ -10,7 +10,10 @@
     display: flex;
     flex-wrap: wrap;
     align-items: flex-start; 
-    gap : 20px
+    overflow: auto;
+    max-height: 800px;
+    gap : 20px;
+    cursor: pointer;
 }
 
 .buttonContainer {

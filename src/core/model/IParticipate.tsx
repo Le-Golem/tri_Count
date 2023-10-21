@@ -1,6 +1,6 @@
 import { IEvent } from "./IEvent";
 
 export interface IParticipate {
-    eventUser : IEvent 
+    event : IEvent 
     participateId: number
 }

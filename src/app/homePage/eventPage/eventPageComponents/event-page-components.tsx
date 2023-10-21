@@ -12,6 +12,7 @@ import userService from "@/core/services/userService";
 import { IToken } from "@/core/model/IToken";
 
 const EventPageComponents = () => {
+    console.clear()
     const [userConnected, setUserConnected] : [IUser | undefined, setUserList : Function] = useState()
     const [selectedEvent, setSelectedEvent] : [selectedEvent : IEvent | undefined , setSelectedEvent : Function] = useState();
     const [displayDetails , setDisplayDetails] : [displayDetails : boolean , setDisplayDetails : Function] = useState(false)
@@ -19,6 +20,7 @@ const EventPageComponents = () => {
     const [displayPopupAddForm  , setDisplyPopupAddForm] : [displayPopupAddForm : boolean , setDisplayPopupAddForm : Function] = useState(false)
     const [trigger , setTrigger] : [trigger : boolean , setTrigger : Function] = useState(false)
     const [token, setToken] : [token : IToken | undefined, setToken : Function] = useState();
+    const [displayEvent , setDisplayEvent] : [displayEvent : boolean, setDisplayEvent : Function] = useState(false)
 
     useEffect(() => {
         const storedToken = localStorage.getItem('token');
@@ -31,7 +33,7 @@ const EventPageComponents = () => {
     useEffect(() => {
         if (token) {
             const tempoId = token.sub;
-            userService.getUserById(tempoId).then(res => setUserConnected(res));
+            userService.getUserById(tempoId).then(res => {setUserConnected(res) ; console.log(res)});
         }
     }, [token]);
 
@@ -45,21 +47,25 @@ const EventPageComponents = () => {
     function handleClick(event :  IEvent) {
         setSelectedEvent(event);
         setDisplayDetails(true)
+        window.location.href = `http://localhost:3000/homePage/eventPage/${event.eventId}`;
     }
 
     return (
         <>  
             <section style={{marginTop : "10px" , display : "flex" , justifyContent : "space-between"}}>
-                <h1>Evenements en cours</h1>
+                <div>
+                    <button onClick={() => {setDisplayEvent(true)}}>Evenements en cours </button>
+                    <button onClick={() => {setDisplayEvent(false)}}>Historique des Evenements</button>
+                </div>
                 <button onClick={() => setDisplyPopupAddForm(true)} className={styles.displayPopup}>Ajouter un Event</button>
             </section>
             <section className={styles.containerEvent}>
-            {userConnected && userConnected.participate && userConnected.participate.map((event) => (
-                <DisplayEventComponent event={event.eventUser} functionClick={handleClick}/>
+
+            {userConnected && userConnected.participate && userConnected.participate.map((participate) => (
+                <DisplayEventComponent event={participate.event} functionClick={handleClick} key={participate.event.eventId} />
             ))}
             </section>
             {displayPopupAddForm && <EventAddPopup setDisplyPopupAddForm={setDisplyPopupAddForm} setTrigger={setTrigger} trigger={trigger} refreshUserConnected={refreshUserConnected} /> }
-            {displayDetails && selectedEvent && <EventPageDetails event={selectedEvent} setDisplayDetails={setDisplayDetails} />}
         </>
     );
 };
