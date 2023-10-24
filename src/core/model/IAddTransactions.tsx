@@ -1,6 +1,8 @@
 export interface IAddTransaction {
-    Label : string , 
-    amount : string , 
-    users : number , 
+    date : Date;
+    label : string ;
+    amount : number ; 
+    senderId : number ;
     eventId : number , 
+    receiverId : number[] | undefined ;
 }

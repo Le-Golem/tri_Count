@@ -7,8 +7,9 @@ import DisplayUserInput from "@/components/displayUserInput";
 import userService from "@/core/services/userService";
 import eventService from "@/core/services/eventService";
 import { IToken } from "@/core/model/IToken";
+import { IEvent } from "@/core/model/IEvent";
 
-const EventAddPopup = ({setDisplyPopupAddForm , setTrigger , trigger , refreshUserConnected} : {setDisplyPopupAddForm : Function , setTrigger : Function , trigger : boolean , refreshUserConnected : Function}) => {
+const EventAddPopup = ({setDisplyPopupAddForm , setTrigger , trigger , refreshUserConnected , titre , event } : {setDisplyPopupAddForm : Function , setTrigger : Function , trigger : boolean , refreshUserConnected : Function , titre : string , event : IEvent | number }) => {
 
     const [userConnected, setUserConnected] : [IUser | undefined, setUserList : Function] = useState()
     const [label , setLabel] : [label : string  , setLabel : Function] = useState("")
@@ -67,9 +68,13 @@ const EventAddPopup = ({setDisplyPopupAddForm , setTrigger , trigger , refreshUs
         setUsers(event.target.value)
     }
 
+    if (titre.startsWith("Modifier un") && typeof event != "number") {
+        setLabel(event.label);
+        setDescription(event.description);
+    }
+
     const sendForm = () => {
         const tempoUserId = userSelected.map(user => user.userId);
-
 
         if (typeof label !== 'string' || typeof description !== 'string') {
             alert("Le label et la description doivent être des chaînes de caractères valides.");
@@ -84,13 +89,15 @@ const EventAddPopup = ({setDisplyPopupAddForm , setTrigger , trigger , refreshUs
             label: label,
             description: description,
             usersToParticipate: tempoUserId,
-            isActive: true
+            isActive: true,
+            date : new Date(Date.now())
         };
-    
+
         if (label.length != 0 && description.length != 0 && userSelected.length != 0 ){
-            eventService.create(IEventToCreate).then(res => console.log(res))
-            refreshUserConnected()
-            setDisplyPopupAddForm(false)
+            eventService.create(IEventToCreate).then(res => console.log(res)).then(() => {
+                refreshUserConnected()
+                setDisplyPopupAddForm(false)
+            })
         }else {
             alert("Veuillez indiqué toutes les informations")
         }
@@ -102,10 +109,8 @@ const EventAddPopup = ({setDisplyPopupAddForm , setTrigger , trigger , refreshUs
     }, [userSelected]);
     
     const handleDelete = (index: number) => {
-        // Vérifier si l'utilisateur actuel est dans la liste userSelected
         const currentUserIndex = userSelected.findIndex(user => user.userId === userConnected?.userId);
     
-        // Vérifier si l'utilisateur actuel est en train d'être supprimé
         if (currentUserIndex !== -1 && currentUserIndex === index) {
             alert("Vous ne pouvez pas vous supprimer de la liste.");
             return;
@@ -122,7 +127,7 @@ const EventAddPopup = ({setDisplyPopupAddForm , setTrigger , trigger , refreshUs
         <section className={styles.FondFiltre} style={{display : "flex" , flexDirection : "column" , justifyContent:'space-between'}}>
             <section style={{marginLeft :"25px"}}>
                 <div style={{display : "flex" , justifyContent : "space-between"}}>
-                    <p style={{marginTop : "10px"}}>Ajouter un Evenement</p>
+                    <p style={{marginTop : "10px"}}>{titre}</p>
                     <button onClick={() => setDisplyPopupAddForm(false)}  style={{width : "40px" , height : "40px" , margin : "10px"}}>X</button>
                 </div>
                 <section style={{display : "flex" , gap : "10%"}}>
@@ -143,9 +148,8 @@ const EventAddPopup = ({setDisplyPopupAddForm , setTrigger , trigger , refreshUs
                     <div>
                         <ul style={{ margin : "15px 45px 0px 0px", position: "fixed", maxHeight: "35vh", overflow: "auto", width: "25vh", listStyleType: "none", padding: 0 }}>
                         <h1 style={{ fontSize: "20px", fontWeight: "bold", marginBottom: "10px", borderBottom: "2px solid #333", paddingBottom: "5px" }}>Participants</h1>                            {userSelected.map((user, index) => (
-                                <li style={{ marginTop: "5px", padding: "10px", borderBottom: "1px solid #ccc" }} key={user.userId}>
+                                <li style={{ marginTop: "5px", padding: "10px", borderBottom: "1px solid #ccc" , display : "flex" , justifyContent : "space-between" }} key={user.userId}>
                                     <span style={{ marginRight: "10px" }}>{user.username}</span>
-                                    {/* Afficher le bouton de suppression uniquement si l'utilisateur n'est pas l'utilisateur connecté */}
                                     {user.userId !== userConnected?.userId && (
                                         <button style={{ marginLeft: '5px', padding: "5px 10px", background: "#ff5858", color: "#fff", border: "none", cursor: "pointer", borderRadius: "5px" }} onClick={() => handleDelete(index)}>Supprimer</button>
                                     )}

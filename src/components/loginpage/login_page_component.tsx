@@ -14,6 +14,7 @@ const LoginPageComponent = () => {
     const [password, setPassword] = useState("");
     const [email, setEmail] = useState("");
     const [accessCode, setAccessCode] = useState<string>("");
+    console.log("🚀 ~ file: login_page_component.tsx:17 ~ LoginPageComponent ~ accessCode:", accessCode)
     const [token, setToken] = useState<IToken>();
 
 
@@ -30,6 +31,7 @@ const LoginPageComponent = () => {
     }
 
     async function getAccessCode(params: IPostLogin) {
+      console.log("je suis laaaaaaaaaa")
       try {
         const result = await authService.GetAccess(params);
         setAccessCode(result);
@@ -51,6 +53,7 @@ const LoginPageComponent = () => {
 
     const sendForm = async () => {
       if (!isLogin) {
+        console.log("je suis ici ")
           const userToCreate: IAddUser = {
               username: username,
               password: password,
@@ -60,15 +63,13 @@ const LoginPageComponent = () => {
               photo: "photo",
               enabled: 1
           }
-          console.log(userToCreate);
           userService.create(userToCreate).then(res => {if(res) {setIsLogin(true)}});
       } else {
           try {
-              let tempoObject: IPostLogin = { username: "", password: "" };
+              let tempoObject: IPostLogin = { username: "", pass: "" };
               tempoObject.username = username;
-              tempoObject.password = password;
+              tempoObject.pass = password;
               const tempoAccess = await getAccessCode(tempoObject);
-  
               if (tempoAccess) {
                   authService.find(tempoAccess).then(res => res ? setToken(res) : alert("Veuillez indiquer de bonnes coordonnées"));
               }

@@ -1,4 +1,13 @@
-export function checkAuth() {
-    const storedToken = localStorage.getItem("token");
-    return storedToken ? JSON.parse(storedToken) : null;
-  }
+import React, { useEffect } from 'react';
+
+function VérifierAuthentification() {
+    useEffect(() => {
+        if (localStorage.getItem("IsLoggedIn") !== "true") {
+            window.location.href = "http://localhost:3000/";
+        }
+    }, []); 
+
+    return true;
+}
+
+export default VérifierAuthentification;

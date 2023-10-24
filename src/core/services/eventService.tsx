@@ -24,14 +24,23 @@ export class EventService {
         }
     }
 
-
     async create(event: IAddEvent) {
         try {
             const response = await axios.post(`${this.url}/events`, event);
             return response;
         } catch (error) {
             console.error('Error:', error);
-            throw error; // N'oubliez pas de relancer l'erreur pour qu'elle puisse être capturée à l'endroit où vous appelez cette fonction.
+            throw error; 
+        }
+    }
+
+    async deleteEvent(eventId: number) {
+        try {
+            const response = await axios.delete(`${this.url}/events/?eventId=${eventId}`);
+            return response.data; // Vous pouvez retourner la réponse du serveur si nécessaire.
+        } catch (error) {
+            console.error('Error:', error);
+            throw error;
         }
     }
 }

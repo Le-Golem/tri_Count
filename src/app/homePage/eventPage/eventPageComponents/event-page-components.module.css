@@ -1,25 +1,26 @@
 .container {
-    box-sizing: border-box; /* Inclut la bordure dans la largeur/hauteur totale */
-    width: 100%; /* Largeur de 100% de son conteneur parent */
-    max-width: 80%; /* Ne dépasse pas la largeur du conteneur parent */
-    margin: 0 auto; /* Centrer horizontalement en définissant automatiquement les marges gauche et droite */
-    padding: 0; /* Padding de 0 pour supprimer les rembourrages intérieurs */
+    box-sizing: border-box; 
+    width: 100%; 
+    max-width: 80%; 
+    margin: 0 auto; 
+    padding: 0; 
   }
 
   .containerEvent {
     display: flex;
     flex-wrap: wrap;
     align-items: flex-start; 
-    overflow: auto;
-    max-height: 800px;
+    overflow: auto; 
+    height: 75%;
+    max-height: 1000px;
     gap : 20px;
     cursor: pointer;
 }
 
 .buttonContainer {
     display: flex;
-    justify-content: center; /* Horizontally center the contents */
-    align-items: center; /* Vertically center the contents if needed */
+    justify-content: center;
+    align-items: center;
     margin-top: 10px;
     gap : 5px
 }

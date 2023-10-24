@@ -10,9 +10,12 @@ import EventAddPopup from "./addEventPopup/event-add-popup";
 import { IUser } from "@/core/model/IUser";
 import userService from "@/core/services/userService";
 import { IToken } from "@/core/model/IToken";
+import Popup from "@/components/popup-Yes-or-No/Popup";
+import VérifierAuthentification from "@/core/utils";
+
 
 const EventPageComponents = () => {
-    console.clear()
+    
     const [userConnected, setUserConnected] : [IUser | undefined, setUserList : Function] = useState()
     const [selectedEvent, setSelectedEvent] : [selectedEvent : IEvent | undefined , setSelectedEvent : Function] = useState();
     const [displayDetails , setDisplayDetails] : [displayDetails : boolean , setDisplayDetails : Function] = useState(false)
@@ -38,9 +41,9 @@ const EventPageComponents = () => {
     }, [token]);
 
     function refreshUserConnected(){
-        if (token) {
-            const tempoId = token.sub;
-            userService.getUserById(tempoId).then(res => setUserConnected(res));
+        if (userConnected){
+            console.log("je suis ici")
+            userService.getUserById(userConnected.userId).then(res => setUserConnected(res));
         }
     }
 
@@ -50,14 +53,17 @@ const EventPageComponents = () => {
         window.location.href = `http://localhost:3000/homePage/eventPage/${event.eventId}`;
     }
 
+
+
+
     return (
         <>  
             <section style={{marginTop : "10px" , display : "flex" , justifyContent : "space-between"}}>
                 <div>
                     <button onClick={() => {setDisplayEvent(true)}}>Evenements en cours </button>
-                    <button onClick={() => {setDisplayEvent(false)}}>Historique des Evenements</button>
+                    <button onClick={() => {setDisplayEvent(false)}}>Historique des evenements</button>
                 </div>
-                <button onClick={() => setDisplyPopupAddForm(true)} className={styles.displayPopup}>Ajouter un Event</button>
+                <button onClick={() => setDisplyPopupAddForm(true)} className={styles.displayPopup}>Ajouter un evenement</button>
             </section>
             <section className={styles.containerEvent}>
 
@@ -65,7 +71,7 @@ const EventPageComponents = () => {
                 <DisplayEventComponent event={participate.event} functionClick={handleClick} key={participate.event.eventId} />
             ))}
             </section>
-            {displayPopupAddForm && <EventAddPopup setDisplyPopupAddForm={setDisplyPopupAddForm} setTrigger={setTrigger} trigger={trigger} refreshUserConnected={refreshUserConnected} /> }
+            {displayPopupAddForm && <EventAddPopup setDisplyPopupAddForm={setDisplyPopupAddForm} setTrigger={setTrigger} trigger={trigger} refreshUserConnected={refreshUserConnected} titre="Ajouter un Evenement" event={0} /> }
         </>
     );
 };

@@ -3,4 +3,5 @@ export interface IAddEvent {
     description : string , 
     usersToParticipate : number[] | null , 
     isActive : boolean , 
+    date : Date
 }

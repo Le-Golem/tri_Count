@@ -35,15 +35,15 @@ const DisplayEventPatch = ({refresh , setRefresh ,setDisplayPopup} : {refresh : 
   
     // Function to send the form data
     const sendForm = () => {
-      // const EventToCreate : IAddEvent = {
-      //   Label: label,
-      //   solde: solde,
-      //   users: selection,
-      //   isActive: true,
-      // };
-      // eventService.create(EventToCreate).then(res => console.log(res))
-      // setRefresh(!refresh)
-      // setDisplayPopup(false)
+      const EventToCreate : IAddEvent = {
+        label: label,
+        solde: solde,
+        users: selection,
+        isActive: true,
+      };
+      eventService.create(EventToCreate).then(res => console.log(res))
+      setRefresh(!refresh)
+      setDisplayPopup(false)
     };
   
     return (
