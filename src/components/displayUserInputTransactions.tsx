@@ -9,10 +9,13 @@ const DisplayUserinputTransactions = ({selectAll , selectList , participate , se
         selectAll = false
       }
 
-    function handleClick (user : IUser , event : any) {
-    setUserChoice(user);
-    setDisplayUserInput(false);
-    }
+    function handleClick (userId : number , event : any) {
+        if (participate){
+            const tempoUser : IParticipate | undefined = participate.find(user => user.userId === userId);
+            setUserChoice(tempoUser);
+            setDisplayUserInput(false);
+        }
+        }
 
     function handleAll (user : IUser , event : any) {
         setUserChoice(user);
@@ -32,9 +35,9 @@ const DisplayUserinputTransactions = ({selectAll , selectList , participate , se
                 </div>}
             {participate && participate.length !== 0 && selectList &&  participate.map((user) => {
                 return (
-                    <div key={user.user.userId}>
-                        <p onClick={(event) => handleClick(user.user, event)} style={{ height: "32px", fontSize: "14px", fontFamily: "Inter", color: "#667085", cursor: "pointer", width: "100%" }}>
-                        {user.user.username}
+                    <div key={user.username}>
+                        <p onClick={(event) => handleClick(user.userId, event)} style={{ height: "32px", fontSize: "14px", fontFamily: "Inter", color: "#667085", cursor: "pointer", width: "100%" }}>
+                        {user.username}
                         </p>
                     </div>
                     );

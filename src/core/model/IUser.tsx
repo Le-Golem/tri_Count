@@ -1,9 +1,8 @@
-import { IParticipate } from "./IParticipate";
-
+import { IParticipant } from "./IParticipant";
 export interface IUser {
     userId : number ,
     username : string ,
     password : string ,  
     email : string , 
-    participate: IParticipate[]
+    participate: IParticipant[]
 }

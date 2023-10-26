@@ -8,6 +8,7 @@
     margin-top: 15px;
     cursor: pointer;
     transition: transform 0.2s ease;
+
 }
 
 .container:hover {
@@ -35,8 +36,9 @@
 .fontDescription {
     color: white;
     font-size: 14px;
-    font-family: 'Inter-Regular';
     margin-top: 10px;
+    max-height: 130px;
+    overflow: auto;
 }
 
 .footer {

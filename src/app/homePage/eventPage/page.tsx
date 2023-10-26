@@ -1,6 +1,6 @@
 'use client'
+import EventPageComponents from '@/components/eventPageComponents/event-page-components';
 import VérifierAuthentification from '@/core/utils';
-import EventPageComponents from './eventPageComponents/event-page-components';
 import { useState } from 'react';
 
 export default function EventPage() {

@@ -61,8 +61,13 @@ const EventAddPopup = ({setDisplyPopupAddForm , setTrigger , trigger , refreshUs
     const handleLabelChange = (event : any) => {
         setLabel(event.target.value); 
     };
+    console.log(description)
     const handleDescription = (event : any) => {
-        setDescription(event.target.value)
+    let inputValue = event.target.value;
+    let cleanedValue = inputValue.replace(/[^\w\s]/gi, '');
+    event.target.value = cleanedValue;
+    console.log(cleanedValue)
+        setDescription(cleanedValue)
     }
     const handleUsers = (event : any) =>  {
         setUsers(event.target.value)

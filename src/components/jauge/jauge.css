@@ -1,0 +1,15 @@
+.jauge-linéaire-container {
+    width: 100%;
+    height: 40px;
+    position: relative;
+}
+
+.jauge-positive {
+    stroke: #4caf50; /* Couleur de la jauge lorsque le pourcentage est positif */
+    stroke-width: 100%; /* Épaisseur de la jauge */
+}
+
+.jauge-negative {
+    stroke: #f44336; /* Couleur de la jauge lorsque le pourcentage est négatif */
+    stroke-width: 100%; /* Épaisseur de la jauge */
+}

@@ -11,14 +11,11 @@ export class AuthService {
       return accessCode;
     } catch (error) {
       if (axios.isAxiosError(error)) {
-        // Gestion spécifique pour une erreur 401 (Unauthorized)
         console.error('Erreur 401: Unauthorized');
-        // Vous pouvez choisir de rejeter l'erreur ou de la gérer autrement
         throw error;
       } else {
-        // Gérez les autres erreurs ici
         console.error('Erreur lors de la requête POST:', error);
-        throw error; // Vous pouvez choisir de rejeter l'erreur ou de la gérer autrement
+        throw error; 
       }
     }
   }
@@ -26,33 +23,25 @@ export class AuthService {
 
   async find(params: string) {
     try {
-      // Extraire l'access code de params
       const accessCode = params;
-      console.clear();
-      console.log(accessCode);
-      
-      // Effectuer la requête GET en utilisant l'access code comme en-tête Bearer
       if (accessCode) {
         const response = await axios.get('http://localhost:3001/auth/profile', {
           headers: {
-            Authorization: `Bearer ${accessCode}` // Utilisation du jeton Bearer
+            Authorization: `Bearer ${accessCode}` 
           }
         });
   
         if (response.status === 200) {
-          // La requête a réussi
           console.log('Données récupérées:', response.data);
           return response.data;
         } else {
-          // Gérez les autres codes de statut HTTP ici si nécessaire
           console.error('La requête a échoué avec le code de statut:', response.status);
           throw new Error('Erreur de requête');
         }
       }
     } catch (error) {
-      // Gérez les erreurs ici
       console.error('Erreur lors de la requête GET:', error);
-      throw error; // Vous pouvez choisir de rejeter l'erreur ou de la gérer autrement
+      throw error; 
     }
   }
  

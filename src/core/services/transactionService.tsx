@@ -16,22 +16,11 @@ export class TransactionService {
 
     async create(transaction : IAddTransaction) {
         try {
-            const response = await fetch('http://localhost:3001/transactions', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json', 
-                },
-                body: JSON.stringify(transaction),
-            });
-    
-            if (!response.ok) {
-                throw new Error('Failed to create the transaction');
-            }
-    
-            const responseData = await response.json();
-            console.log('transaction created:', responseData);
+            const response = await axios.post(`${this.url}/transactions`, transaction)
+            return response
         } catch (error) {
             console.error('Error:', error);
+            throw error;
         }
     }
 
@@ -41,6 +30,16 @@ export class TransactionService {
             return response.data;
         } catch (error) {
             console.error('Error fetching user data:', error);
+            throw error;
+        }
+    }
+
+    async deleteTransaction(transactionId: number) {
+        try {
+            const response = await axios.delete(`${this.url}/transactions/${transactionId}`);
+            return response.data;
+        } catch (error) {
+            console.error('Error deleting transaction:', error);
             throw error;
         }
     }

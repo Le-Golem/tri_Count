@@ -1,55 +1,62 @@
 import React, { useState, useEffect } from "react";
 import styles from "./add-transaction-popup.module.css";
-import DisplayUserInput from "@/components/displayUserInput";
 import { IAddTransaction } from "@/core/model/IAddTransactions";
-import { IEventWithTransactions } from "@/core/model/IEventWithTransactions";
 import { IUser } from "@/core/model/IUser";
 import { IToken } from "@/core/model/IToken";
 import userService from "@/core/services/userService";
-import { IEvent } from "@/core/model/IEvent";
 import { IParticipate } from "@/core/model/IParticipate";
 import DisplayUserinputTransactions from "../displayUserInputTransactions";
+import { IEventData } from "@/core/model/IEventData";
+import transactionService from "@/core/services/transactionService";
 
-const TransactionsAddPopup  = ({setDisplyPopupAddForm , event } : {setDisplyPopupAddForm : Function , event : IEventWithTransactions | undefined }) => {
+const TransactionsAddPopup  = ({setDisplyPopupAddForm , event , functionRefresh } : {setDisplyPopupAddForm : Function , event : IEventData | undefined , functionRefresh : Function }) => {
 
   const [userConnected, setUserConnected] : [IUser | undefined, setUserList : Function] = useState()
   const [label , setLabel] : [label : string, setLabel : Function] = useState("")
   const [amount, setAmount] : [amount : number , setAmount : Function] = useState(0)
   const [senderId, setSenderId] : [senderId : number , setSenderId : Function] = useState(0)
-  const [eventId, setEventId] : [eventId : number , setEventId : Function] = useState(0)
   const [receiverId, setReceiverId] : [receiverId : number[] | undefined, setReceiverId : Function] = useState()
   const [date, setDate] : [date : Date | undefined, setDate : Function] = useState()
   const [token, setToken] : [token : IToken | undefined, setToken : Function] = useState();
   const [displayUserInput , setDisplayUserInput] : [displayUserInput : boolean , setDisplayUserInput : Function] = useState(false)
   const [users , setUsers] : [users : IUser[] , setUsers : Function] = useState([])
-  const [userList , setUserList] : [userList : IUser[] , setUserList : Function] = useState([])
   const [userChoice , setUserChoice] : [userChoice : IUser | undefined , setUserChoice : Function] = useState()
   const [userSelected , setUserSelected] : [userSelected : IUser[] , setUserSelected : Function] = useState([])
   const [description , setDescription] : [description : string  , setDescription : Function] = useState("")
-  const [eventWithoutUserConnected , setEventWithoutUserConnected] : [eventWithoutUserConnected : IParticipate[]| undefined , setEventWithoutUserConnected : Function] = useState(event?.event.participate.filter(event => event.user.userId != userConnected?.userId))
+  const [eventWithoutUserConnected , setEventWithoutUserConnected] : [eventWithoutUserConnected : IParticipate[] | undefined , setEventWithoutUserConnected : Function] = useState(event?.participate.filter(event => event.userId != userConnected?.userId))
+  const [eventWithoutUserConnectedSelect , setEventWithoutUserConnectedSelect] : [eventWithoutUserConnectedSelect : IParticipate[] | undefined , setEventWithoutUserConnectedSelect : Function] = useState(event?.participate.filter(event => event.userId != userConnected?.userId))
 
+  const [userSelect , setUserSelect] : [userSelect : IUser | undefined , setUserSelect : Function] = useState()
+
+useEffect(() => {
+  if (!userSelect){
+    setEventWithoutUserConnected(eventWithoutUserConnectedSelect)
+  }else if (userSelect && eventWithoutUserConnectedSelect) {
+    setEventWithoutUserConnected(eventWithoutUserConnectedSelect?.filter(e => e.userId != userSelect.userId))
+  }
+} , [userSelect])
+
+useEffect(() => {
+  if (userSelected.length === 0 ){
+    setIsSelectAll(true)
+    setIsSelectList(true)
+  }
+}, [userSelected])
 
   const [isSelectAll, setIsSelectAll] : [isSelectAll : boolean, setIsSelectAll : Function] = useState(true)
   const [isSelectList, setIsSelectList] : [isSelectList : boolean, setIsSelectList : Function] = useState(true)
 
   useEffect(() => {
-    console.clear()
-    console.log(userChoice?.username)
-    // console.log(userSelected)
-    if (!userChoice){
-      setIsSelectAll(true)
-      setIsSelectList(true)
-    }
-
- if (userChoice?.username === "Tous"){
-      console.log("je suis ici")
+  if (userChoice){
+    if (userChoice.userId === -1 ){
       setIsSelectAll(true)
       setIsSelectList(false)
     }else {
-      console.log("je suis not")
-      // setIsSelectAll(false)
+      setIsSelectAll(false)
       setIsSelectList(true)
     }
+  }
+
     if (userChoice && userSelected.every(user => user.userId !== userChoice.userId)) {
       setUserSelected((prevUsers : IUser[]) => [...prevUsers, userChoice]);
     }
@@ -77,6 +84,13 @@ useEffect(() => {
     }
 }, [token]);
 
+useEffect(() => {
+  if (eventWithoutUserConnected){
+    const filteredUserList = eventWithoutUserConnected.filter(user => !userSelected.some(selectedUser => selectedUser.userId === user.userId));
+    setEventWithoutUserConnected(filteredUserList);
+  }
+}, [userSelected]);
+
 const handleLabelChange = (event : any) => {
   setLabel(event.target.value); 
 };
@@ -86,14 +100,25 @@ const handleUsers = (event : any) =>  {
 }
 
 const handleDelete = (index: number) => {
-  const updatedUserSelected = [...userSelected];
-  const removedUser = updatedUserSelected.splice(index, 1)[0];
-  setUserList((prevUserList : IUser[]) => [...prevUserList, removedUser]);
-  setUserSelected(updatedUserSelected);
+  const removedUser = userSelected[index];
+  setEventWithoutUserConnected((prevUserList : IParticipate[]) => [...prevUserList, removedUser]);
+  setUserSelected((prevUsers : IUser[]) => {
+      const updatedUsers = [...prevUsers];
+      updatedUsers.splice(index, 1);
+      return updatedUsers;
+  });
+};
+
+const handleEventChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+  if (eventWithoutUserConnected){
+    const selectedUserId = parseInt(event.target.value);
+    const selectedUser = eventWithoutUserConnected.find((user) => user.userId === selectedUserId);
+    setUserSelect(selectedUser);
+  }
 };
 
 const handleAmountChange = (event : any) => {
-  setAmount(event.target.value); 
+  setAmount(Number(event.target.value)); 
 };
 
   const sendForm = () => {
@@ -107,35 +132,30 @@ const handleAmountChange = (event : any) => {
       alert("Veuillez sélectionner au moins un utilisateur.");
       return;
   }
+  console.log(amount)
+  if (amount === 0 || isNaN(amount)) {
+    alert("Veuillez saisir un montant.");
+    return;
+  }
 
-    if (userConnected){
-      const filteredUsers = userSelected.filter(user => user.userId !== userConnected.userId);
+    if (userConnected && event && userSelect){
+      const filteredUsers = userSelected.filter(user => user.userId != -1);
 
       const transactionToCreate: IAddTransaction = {
         date: new Date(Date.now()),
         label: label,
         amount: amount,
-        senderId: userConnected.userId,
-        eventId: eventId,
-        receiverId: filteredUsers.map(user => user.userId)
+        senderId: userSelect?.userId,
+        eventId: event.event.eventId,
       };
+
+      if (userChoice && userChoice?.userId > 0 ) {
+       transactionToCreate.receiverId = filteredUsers.map(user => user.userId)
+      }
+
+      transactionService.create(transactionToCreate).then((res) => {console.log(res);}).finally(() => {functionRefresh() , setDisplyPopupAddForm(false)});
     }
   };
-
-  useEffect(() => {
-    if (userChoice) {
-        if (userChoice.userId === -1) {
-            // Si l'utilisateur choisi est "Tous" (-1), filtrez tous les utilisateurs sauf l'utilisateur connecté
-            const filteredParticipate = event?.event.participate.filter(e => e.user.userId !== userChoice.userId);
-            setEventWithoutUserConnected(filteredParticipate);
-        } else {
-            // Si un utilisateur spécifique est choisi, utilisez la liste de participations complète
-            setEventWithoutUserConnected(event?.event.participate);
-        }
-    }
-}, [userChoice, event?.event.participate, userChoice]);
-
-  // const eventWithoutUserConnected : IParticipate[] | undefined = ;
 
   return (
     <>
@@ -159,7 +179,7 @@ const handleAmountChange = (event : any) => {
                         {displayUserInput && <DisplayUserinputTransactions participate={eventWithoutUserConnected} setUserChoice={setUserChoice} setDisplayUserInput={setDisplayUserInput} selectAll={isSelectAll} selectList={isSelectList}/>}
                         <button onClick={() => setDisplayUserInput(false)} style={{transform: 'translate(207px, -45px)' , width : "40px" , height : "40px"}} >X</button>
                         <div className={styles.cut}></div>
-                        <label className={styles.iLabel} htmlFor="users">users</label>
+                        <label className={styles.iLabel} htmlFor="users">Pour qui </label>
                     </div>
                     
                     <div>
@@ -180,6 +200,14 @@ const handleAmountChange = (event : any) => {
                     <label className={styles.iLabel} htmlFor="Amount">Montant</label>
                 </div>
                 <p style={{transform : "translate(225px, -35px)"}}>€</p>
+                <div style={{height: "100px" , width :"255px" , marginTop : "10px"}}>
+                  <select onChange={(event) => handleEventChange(event)} className={styles.select}>
+                    <option  className={styles.iLabel} value={-1}>Payé par</option>
+                    {eventWithoutUserConnectedSelect && eventWithoutUserConnectedSelect.map((participant) => (
+                    <option key={participant.userId} value={participant.userId}>{participant.username}</option>
+                    ))}
+                  </select>
+                </div>
             </section>
 
             <section style={{marginBottom : "10px" , display : "flex" , justifyContent :"center" , textAlign : "center"}}>

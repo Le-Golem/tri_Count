@@ -14,7 +14,6 @@ const LoginPageComponent = () => {
     const [password, setPassword] = useState("");
     const [email, setEmail] = useState("");
     const [accessCode, setAccessCode] = useState<string>("");
-    console.log("🚀 ~ file: login_page_component.tsx:17 ~ LoginPageComponent ~ accessCode:", accessCode)
     const [token, setToken] = useState<IToken>();
 
 
@@ -31,7 +30,6 @@ const LoginPageComponent = () => {
     }
 
     async function getAccessCode(params: IPostLogin) {
-      console.log("je suis laaaaaaaaaa")
       try {
         const result = await authService.GetAccess(params);
         setAccessCode(result);
@@ -52,8 +50,24 @@ const LoginPageComponent = () => {
     }, [token]);
 
     const sendForm = async () => {
+
+    if (!username || !password) {
+      alert("Veuillez remplir tous les champs obligatoires.");
+      return;
+  }
+
+  if (!email && !isLogin){
+    alert("Veuillez renseigner votre adresse email.");
+    return;
+  }
+
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (email && !emailRegex.test(email)) {
+      alert("Veuillez saisir une adresse e-mail valide.");
+      return;
+  }
       if (!isLogin) {
-        console.log("je suis ici ")
+          // Effectuer les étapes de création de l'utilisateur si isLogin est false
           const userToCreate: IAddUser = {
               username: username,
               password: password,
@@ -63,19 +77,29 @@ const LoginPageComponent = () => {
               photo: "photo",
               enabled: 1
           }
-          userService.create(userToCreate).then(res => {if(res) {setIsLogin(true)}});
-      } else {
           try {
-              let tempoObject: IPostLogin = { username: "", pass: "" };
-              tempoObject.username = username;
-              tempoObject.pass = password;
-              const tempoAccess = await getAccessCode(tempoObject);
-              if (tempoAccess) {
-                  authService.find(tempoAccess).then(res => res ? setToken(res) : alert("Veuillez indiquer de bonnes coordonnées"));
-              }
+              const res = await userService.create(userToCreate);
           } catch (error) {
-              console.error('Erreur lors de la requête :', error);
+              console.error('Erreur lors de la création de l\'utilisateur :', error);
           }
+      }
+
+      try {
+          let tempoObject: IPostLogin = { username: "", pass: "" };
+          tempoObject.username = username;
+          tempoObject.pass = password;
+          const tempoAccess = await getAccessCode(tempoObject);
+          if (tempoAccess) {
+              const authServiceResponse = await authService.find(tempoAccess);
+              if (authServiceResponse) {
+                  setToken(authServiceResponse);
+              } else {
+                  alert("Veuillez indiquer de bonnes coordonnées");
+              }
+          }
+      } catch (error) {
+        console.error('Erreur lors de la requête :', error);
+        alert("Une erreur s'est produite lors de la tentative de connexion. Veuillez réessayer.");
       }
   }
 
@@ -92,24 +116,24 @@ const LoginPageComponent = () => {
 
             {isLogin ? (
                 <>
-                      <div className={styles.title}>Welcome</div>
+                      <div className={styles.title}>Bienvenue</div>
                       <div className={`${styles.inputContainer} ${styles.ic1}`}>
-                          <input value={username} type="text" className={styles.input} id="Username" onChange={handleChangeUsername} />
+                          <input autoComplete='off' value={username} type="text" className={styles.input} id="Username" onChange={handleChangeUsername} />
                           <div className={styles.cut}></div>
                           <label className={styles.iLabel} htmlFor="Username">Username</label>
                       </div>
 
                       <div className={`${styles.inputContainer} ${styles.ic2}`}>
-                          <input value={password} type="password" className={styles.input} id="Password" onChange={handleChangePassword} />
+                          <input autoComplete='off' value={password} type="password" className={styles.input} id="Password" onChange={handleChangePassword} />
                           <div className={styles.cut}></div>
                           <label className={styles.iLabel} htmlFor="Password">Password</label>
                       </div>
-                      <button className={styles.submit} onClick={sendForm} type="submit">submit</button>
+                      <button className={styles.submit} onClick={sendForm} type="submit">Connexion</button>
                   </>
             ) : (
                     <>
-                      <div className={styles.title}>Welcome</div>
-                      <div className={styles.subtitle}>Let's create your account!</div>
+                      <div className={styles.title}>Bienvenue</div>
+                      <div className={styles.subtitle}>Créons votre compte !</div>
 
                       <div className={`${styles.inputContainer} ${styles.ic1}`}>
                           <input value={username} type="text" className={styles.input} id="Username" onChange={handleChangeUsername} />
@@ -118,16 +142,16 @@ const LoginPageComponent = () => {
                       </div>
 
                       <div className={`${styles.inputContainer} ${styles.ic2}`}>
-                          <input value={password} type="password" className={styles.input} id="Password" onChange={handleChangePassword} />
+                          <input autoComplete='off' value={password} type="password" className={styles.input} id="Password" onChange={handleChangePassword} />
                           <div className={styles.cut}></div>
                           <label className={styles.iLabel} htmlFor="Password">Password</label>
                       </div>
                       <div className={`${styles.inputContainer} ${styles.ic2}`}>
-                          <input value={email} type="email" className={styles.input} id="email" onChange={handleChangeEmail} />
+                          <input autoComplete='off' value={email} type="email" className={styles.input} id="email" onChange={handleChangeEmail} />
                           <div className={`${styles.cut} ${styles.cutShort}`}></div>
                           <label className={styles.iLabel} htmlFor="email">Email</label>
                       </div>
-                      <button className={styles.submit} onClick={sendForm} type="submit">submit</button>
+                      <button className={styles.submit} onClick={sendForm} type="submit">Connexion</button>
                     </>
             )}
         </article>

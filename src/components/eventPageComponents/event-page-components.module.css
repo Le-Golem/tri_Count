@@ -11,10 +11,11 @@
     flex-wrap: wrap;
     align-items: flex-start; 
     overflow: auto; 
-    height: 75%;
+    height: 80.8%;
     max-height: 1000px;
     gap : 20px;
     cursor: pointer;
+    margin-top: 10px;
 }
 
 .buttonContainer {
@@ -69,4 +70,12 @@
     text-align: center;
     width: 160px;
     margin-right: 70px;
+}
+
+.noTransactionsMessage {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    margin-top: 20px; 
 }

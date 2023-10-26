@@ -12,8 +12,8 @@ const Navbar = () => {
       route: "/homePage/eventPage",
     },
     {
-      label: "Options",
-      route: "/",
+      label: "Deconnexion",
+      route: "http://localhost:3000/",
     },
   ];
 

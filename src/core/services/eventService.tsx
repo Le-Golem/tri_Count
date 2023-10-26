@@ -1,5 +1,6 @@
 import axios from "axios";
 import { IAddEvent } from "../model/IAddEvent";
+import { IPatchEvent } from "../model/IPatchEvent";
 
 export class EventService {
     private readonly url: string = "http://localhost:3001";
@@ -37,6 +38,16 @@ export class EventService {
     async deleteEvent(eventId: number) {
         try {
             const response = await axios.delete(`${this.url}/events/?eventId=${eventId}`);
+            return response.data; // Vous pouvez retourner la réponse du serveur si nécessaire.
+        } catch (error) {
+            console.error('Error:', error);
+            throw error;
+        }
+    }
+
+    async updateEvent(eventToUpdate: IPatchEvent) {
+        try {
+            const response = await axios.patch(`${this.url}/events/${eventToUpdate.eventId}` , eventToUpdate);
             return response.data; // Vous pouvez retourner la réponse du serveur si nécessaire.
         } catch (error) {
             console.error('Error:', error);
