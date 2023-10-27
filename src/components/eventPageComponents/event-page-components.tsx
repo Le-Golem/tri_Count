@@ -12,7 +12,6 @@ import waitingGIF from "../../../public/img/waiting.gif"
 const EventPageComponents = () => {
     
     const [userConnected, setUserConnected] : [IUser | undefined, setUserList : Function] = useState()
-    console.log("🚀 ~ file: event-page-components.tsx:15 ~ EventPageComponents ~ userConnected:", userConnected)
     const [selectedEvent, setSelectedEvent] : [selectedEvent : IEvent | undefined , setSelectedEvent : Function] = useState();
     const [displayDetails , setDisplayDetails] : [displayDetails : boolean , setDisplayDetails : Function] = useState(false)
 
@@ -32,7 +31,7 @@ const EventPageComponents = () => {
     useEffect(() => {
         if (token) {
             const tempoId = token.sub;
-            userService.getUserById(tempoId).then(res => {setUserConnected(res) ; console.log(res)}).finally(() => {setLoader(false)});
+            userService.getUserById(tempoId).then(res => {setUserConnected(res) }).finally(() => {setLoader(false)});
         }
     }, [token]);
 

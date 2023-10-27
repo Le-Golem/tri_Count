@@ -132,7 +132,6 @@ const handleAmountChange = (event : any) => {
       alert("Veuillez sélectionner au moins un utilisateur.");
       return;
   }
-  console.log(amount)
   if (amount === 0 || isNaN(amount)) {
     alert("Veuillez saisir un montant.");
     return;

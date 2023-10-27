@@ -143,7 +143,7 @@ const [userSelected , setUserSelected] : [userSelected : IParticipate[] , setUse
             </section>
 
             <section style={{marginBottom : "10px" , display : "flex" , justifyContent :"center" , textAlign : "center"}}>
-                <button className={styles.submit} onClick={sendForm} type="submit">submit</button>
+                <button className={styles.submit} onClick={sendForm} type="submit">Modifier</button>
             </section>
         </section>
         </>

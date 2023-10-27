@@ -7,7 +7,6 @@ export class AuthService {
       const response = await axios.post('http://localhost:3001/auth/login', IPostLogin);
     
       const accessCode = response.data.access_token;
-      console.log(accessCode);
       return accessCode;
     } catch (error) {
       if (axios.isAxiosError(error)) {
@@ -32,7 +31,6 @@ export class AuthService {
         });
   
         if (response.status === 200) {
-          console.log('Données récupérées:', response.data);
           return response.data;
         } else {
           console.error('La requête a échoué avec le code de statut:', response.status);
