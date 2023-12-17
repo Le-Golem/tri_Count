@@ -1,5 +1,6 @@
 import { IParticipate } from "@/core/model/IParticipate";
 import { IUser } from "@/core/model/IUser";
+import styles from "./displayUserInput.module.css"
 
 const DisplayUserinputTransactions = ({selectAll , selectList , participate , setUserChoice , setDisplayUserInput} : {selectAll: boolean , selectList : boolean , participate : IParticipate[] | undefined ,setUserChoice : Function , setDisplayUserInput : Function}) => {
 
@@ -26,17 +27,17 @@ const DisplayUserinputTransactions = ({selectAll , selectList , participate , se
 
     return( 
         <>
-            <article style={{ border: "1px solid #DFE0EB", borderRadius: "4px", backgroundColor: "white", padding: "10px", paddingBottom: "0", position: "absolute", zIndex: "1", width: "93%", overflow: "auto", maxHeight: "360px", marginTop: "5px", boxShadow: "0px 0px 10px 0px #66708559" }}>
+            <article className={styles.componentContainer}>
             {selectAll &&
                 <div key={-1}>
-                    <p onClick={(event) => handleAll(tempoUser, event)} style={{ height: "32px", fontSize: "14px", fontFamily: "Inter", color: "#667085", cursor: "pointer", width: "100%" }}>
+                    <p onClick={(event) => handleAll(tempoUser, event)} className={styles.FontP}>
                     {tempoUser.username}
                     </p>
                 </div>}
             {participate && participate.length !== 0 && selectList &&  participate.map((user) => {
                 return (
                     <div key={user.username}>
-                        <p onClick={(event) => handleClick(user.userId, event)} style={{ height: "32px", fontSize: "14px", fontFamily: "Inter", color: "#667085", cursor: "pointer", width: "100%" }}>
+                        <p onClick={(event) => handleClick(user.userId, event)} className={styles.FontP}>
                         {user.username}
                         </p>
                     </div>

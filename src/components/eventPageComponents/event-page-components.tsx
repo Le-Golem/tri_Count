@@ -71,35 +71,34 @@ const EventPageComponents = () => {
 
       return (
         <>  
-            <section style={{ marginTop: "10px", display: "flex", justifyContent: "space-between" }}>
+
+        <section className={styles.container}>
+            <div className={styles.headerContainer}>
                 <h2>Liste des événements</h2>
-                <div>
-                    <button onClick={() => setDisplyPopupAddForm(true)} className={styles.displayPopup}>Ajouter un événement</button>
-                </div>
-            </section>
-    
+                <button onClick={() => setDisplyPopupAddForm(true)}>Ajouter un événement</button>
+            </div>
             {loader ? (
                 <div>
                     <figure style={background}></figure>
                     <img style={waiting} src={waitingGIF.src} alt="Waiting GIF" />
                 </div>
             ) : (
-                <>
-                    {userConnected && userConnected.participate.length > 0 ? (
-                        <section className={styles.containerEvent}>
+            <>
+              {userConnected && userConnected.participate.length > 0 ? (
+                  <section className={styles.containerEvent}>
                             {userConnected.participate.map((participate) => (
                                 <DisplayEventComponent event={participate.event} functionClick={handleClick} key={participate.event.eventId} />
-                            ))}
+                                ))}
                         </section>
                     ) : (
                         <div className={styles.noTransactionsMessage}>
-                            <h2>Il n'y a pas d'Evenements pour le moment.</h2>
+                            <h2 className={styles.h2Container}>Il n'y a pas d'Evenements pour le moment.</h2>
                         </div>
                     )}
                 </>
             )}
-    
-            {displayPopupAddForm && <EventAddPopup setDisplyPopupAddForm={setDisplyPopupAddForm} setTrigger={setTrigger} trigger={trigger} refreshUserConnected={refreshUserConnected} titre="Ajouter un Événement" event={0} /> }
+        </section>
+        {displayPopupAddForm && <EventAddPopup setDisplyPopupAddForm={setDisplyPopupAddForm} setTrigger={setTrigger} trigger={trigger} refreshUserConnected={refreshUserConnected} titre="Ajouter un Événement" event={0} /> }
         </>
     );
     

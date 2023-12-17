@@ -8,7 +8,7 @@ export class EventService {
     async getAll() {
         try {
             const response = await axios.get(`${this.url}/event`);
-            return response.data; // Return the data obtained from the server.
+            return response.data; 
         } catch (error) {
             console.error("Error fetching data:", error);
             throw error; 

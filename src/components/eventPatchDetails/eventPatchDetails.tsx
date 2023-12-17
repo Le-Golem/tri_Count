@@ -11,7 +11,6 @@ import eventService from "@/core/services/eventService"
 import { IParticipate } from "@/core/model/IParticipate"
 import { IPatchEvent } from "@/core/model/IPatchEvent"
 const EventPatchDetails = ({setDisplayPopupPatchEvent , refreshUserConnected , event } : {setDisplayPopupPatchEvent : Function , refreshUserConnected : Function , event : IEventData | undefined }) => {
-console.log("🚀 ~ file: eventPatchDetails.tsx:12 ~ EventPatchDetails ~ event:", event)
 
 const [userConnected, setUserConnected] : [IUser | undefined, setUserList : Function] = useState()
 const [label, setLabel] = useState(event?.event.label || '');
@@ -63,7 +62,6 @@ const [userSelected , setUserSelected] : [userSelected : IParticipate[] , setUse
         let inputValue = event.target.value;
         let cleanedValue = inputValue.replace(/[^\w\s]/gi, '');
         event.target.value = cleanedValue;
-        console.log(cleanedValue)
             setDescription(cleanedValue)
         }
     const handleUsers = (event : any) =>  {
@@ -89,7 +87,6 @@ const [userSelected , setUserSelected] : [userSelected : IParticipate[] , setUse
         };
         
         if (label.length !== 0 && description.length !== 0 && userSelected.length !== 0 && event) {
-            console.log(event.event.eventId)
             eventService.updateEvent(eventToUpdate).then(res => {
                 refreshUserConnected();
                 setDisplayPopupPatchEvent(false);
@@ -123,26 +120,26 @@ const [userSelected , setUserSelected] : [userSelected : IParticipate[] , setUse
     return(
         <>
         <figure onClick={() => setDisplayPopupPatchEvent(false)} className={styles.backGroud} />
-        <section className={styles.FondFiltre} style={{display : "flex" , flexDirection : "column" , justifyContent:'space-between'}}>
-            <section style={{marginLeft :"25px"}}>
-                <div style={{display : "flex" , justifyContent : "space-between"}}>
-                    <p style={{marginTop : "10px"}}>Modifier un evenement</p>
-                    <button onClick={() => setDisplayPopupPatchEvent(false)}  style={{width : "40px" , height : "40px" , margin : "10px"}}>X</button>
+        <section className={styles.FondFiltre}>
+            <section className={styles.sectionContainer}>
+                <div className={styles.divHeaderContainer}>
+                    <p className={styles.pPlacement}>Modifier un evenement</p>
+                    <button onClick={() => setDisplayPopupPatchEvent(false)} className={styles.buttonDeleteStyle}>X</button>
                 </div>
-                <section style={{display : "flex" , gap : "10%"}}>
+                <section className={styles.divContainer} >
                     <div className={`${styles.inputContainer} ${styles.ic1}`}>
                     <input autoComplete="off" type="Label" value={label} className={styles.input} id="Label" onChange={handleLabelChange} />                        <div className={styles.cut}></div>
                         <label className={styles.iLabel} htmlFor="Label">Label</label>
                     </div>
                 </section>
-                <div className={`${styles.inputContainer} ${styles.ic1}`}>
-                <textarea className={styles.textarea} id="description" value={description} onChange={handleDescription} style={{ width: "600px", height: "600px", maxWidth: "600px", maxHeight: "200px", minHeight: "50px", minWidth: "50px", marginTop: "10px", resize: "none" }}></textarea>
+                <div className={`${styles.inputContainer} ${styles.ic1} ${styles.textarea}`}>
+                <textarea className={styles.textarea} id="description" value={description} onChange={handleDescription}></textarea>
                     <div className={styles.cut}></div>
                     <label className={styles.iLabel} htmlFor="description">Description</label>
                 </div>
             </section>
 
-            <section style={{marginBottom : "10px" , display : "flex" , justifyContent :"center" , textAlign : "center"}}>
+            <section className={styles.sectionFooterContainer}>
                 <button className={styles.submit} onClick={sendForm} type="submit">Modifier</button>
             </section>
         </section>

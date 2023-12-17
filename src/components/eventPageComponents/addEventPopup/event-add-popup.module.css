@@ -10,11 +10,13 @@
 }
 
 .FondFiltre {
-    max-width: 1000px;
-    min-width: 1000px;
+    width: 800px ;
     height: 500px;
     background-color: #15172b;
+    flex-direction: column;
+    justify-content: space-between;
     border: 1px solid #15172b;
+    display: flex;
     border-radius: 8px;
     box-shadow: 0px 0px 15px #0000000D;
     position: fixed;
@@ -24,6 +26,30 @@
     transform: translate(-50%, -50%);
 }
 
+.sectionPlacement {
+  margin-left: 25px;
+}
+
+.pPlacement {
+  margin-top: 10px;
+}
+
+.buttonStyle{
+  width: 40px;
+  height: 40px;
+  margin : 10px;
+}
+
+.buttonDeleteStyle {
+  transform: translate(207px , -45px);
+  width: 40px;
+  height: 40px;
+}
+
+.spanPlacement {
+  margin-right: 10px;
+}
+
 .inputContainer {
     height: 50px;
     position: relative;
@@ -31,7 +57,7 @@
   }
   
   .ic1 {
-    margin-top: 40px;
+    margin-top: 20px;
   }
   
   .ic2 {
@@ -78,6 +104,57 @@
     transition: transform 200ms, color 200ms;
     top: 16px;
   }
+
+  .divHeader {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .sectionContainer {
+    display: flex;
+    gap: 10px;
+  }
+
+  .sectionList {
+    position: fixed;
+    max-height: 100px;
+    overflow: auto;
+    width: 25vh;
+    list-style-type: none;
+    padding: 0;
+  }
+
+  .h1Font{
+    font-size: 20px;
+    font-weight: bold;
+    width: 225px;
+    border-bottom: 2px solid #333;
+  }
+
+  .liFont{
+    margin-top: 5px;
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .buttonList {
+    margin-left: 5px;
+    padding: 5px 10px;
+    background-color: #ff5858 ;
+    color : #fff;
+    border: none ;
+    cursor : pointer ;
+    border-radius: 5px;
+  }
+
+  .footerSection {
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+  }
   
   .input:focus ~ .cut {
     transform: translateY(0px);
@@ -108,7 +185,63 @@
     text-align: center;
     width: 95%;
   }
+
+  .textarea {
+    width: 600px;
+    height: 600px; 
+    max-width: 600px;
+    max-height: 200px;
+    margin-top: 10px;
+    resize: none;
+  }
   
   .submit:active {
-    background-color: #06b;
+    background-color: #0066bb;
   }
+
+  @media screen and (max-width: 770px) {
+    .FondFiltre{
+        width: 400px;
+    }
+    
+    .sectionContainer{
+      display: flex;
+      flex-direction: column;
+      height: 270px;
+    }
+
+    .textarea{
+      height: 50px;
+      width: 350px;
+    }
+}
+
+  @media screen and (max-width: 400px) {
+    .FondFiltre{
+        width: 200px;
+    }
+
+    .textarea{ 
+      height: 50px;
+      width: 150px;
+    }
+
+    .input {
+      width: 150px;
+      margin : 0 ;
+    }
+
+    .sectionList{
+      overflow: auto;
+      min-height: 20px;
+      padding-right: 25px;
+    }
+
+    .h1Font{
+      font-size: 15px;
+    }
+
+    .buttonList{
+      margin-bottom: 10px;
+    }
+}

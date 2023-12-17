@@ -159,60 +159,67 @@ const handleAmountChange = (event : any) => {
   return (
     <>
         <figure onClick={() => setDisplyPopupAddForm(false)} className={styles.backGroud} />
-        <section className={styles.FondFiltre} style={{display : "flex" , flexDirection : "column" , justifyContent:'space-between'}}>
+        <section className={styles.FondFiltre}>
+          <div className={styles.headerContainer}>
+            <p className={styles.pPlacement} >Ajouter une transaction</p>
+            <button onClick={() => setDisplyPopupAddForm(false)} className={styles.buttonStyle} >X</button>
+          </div>
 
-        <section style={{marginLeft :"25px"}}>
-                <div style={{display : "flex" , justifyContent : "space-between"}}>
-                    <p style={{marginTop : "10px"}}>Ajouter une transaction</p>
-                    <button onClick={() => setDisplyPopupAddForm(false)}  style={{width : "40px" , height : "40px" , margin : "10px"}}>X</button>
-                </div>
-                <section style={{display : "flex" , gap : "10%"}}>
-                    <div className={`${styles.inputContainer} ${styles.ic1}`}>
-                        <input autoComplete="off"  type="Label" className={styles.input} id="Label" onChange={handleLabelChange}  />
-                        <div className={styles.cut}></div>
-                        <label className={styles.iLabel} htmlFor="Label">Label</label>
-                    </div>
 
-                    <div className={`${styles.inputContainer} ${styles.ic1}`} >
-                        <input autoComplete="off"  type="text" className={styles.input} id="users" onChange={handleUsers} onClick={() => setDisplayUserInput(true)}/>
-                        {displayUserInput && <DisplayUserinputTransactions participate={eventWithoutUserConnected} setUserChoice={setUserChoice} setDisplayUserInput={setDisplayUserInput} selectAll={isSelectAll} selectList={isSelectList}/>}
-                        <button onClick={() => setDisplayUserInput(false)} style={{transform: 'translate(207px, -45px)' , width : "40px" , height : "40px"}} >X</button>
-                        <div className={styles.cut}></div>
-                        <label className={styles.iLabel} htmlFor="users">Pour qui </label>
-                    </div>
-                    
-                    <div>
-                        <ul style={{ margin : "15px 45px 0px 0px", position: "fixed", maxHeight: "35vh", overflow: "auto", width: "25vh", listStyleType: "none", padding: 0 }}>
-                        <h1 style={{ fontSize: "20px", fontWeight: "bold", marginBottom: "10px", borderBottom: "2px solid #333", paddingBottom: "5px" }}>Participants</h1>                            
-                            {userSelected.map((user, index) => (
-                                <li style={{ marginTop: "5px", padding: "10px", borderBottom: "1px solid #ccc" , display : "flex" , justifyContent : "space-between" }} key={user.userId}>
-                                    <span style={{ marginRight: "10px" }}>{user.username}</span>
-                                        <button style={{ marginLeft: '5px', padding: "5px 10px", background: "#ff5858", color: "#fff", border: "none", cursor: "pointer", borderRadius: "5px" }} onClick={() => handleDelete(index)}>Supprimer</button>
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
-                </section>
-                <div className={`${styles.inputContainer} ${styles.ic1}`}>
-                    <input autoComplete="off"  type="decimal" min={0} className={styles.input} id="Amount" onChange={handleAmountChange}  />
-                    <div className={styles.cut}></div>
-                    <label className={styles.iLabel} htmlFor="Amount">Montant</label>
-                </div>
-                <p style={{transform : "translate(225px, -35px)"}}>€</p>
-                <div style={{height: "100px" , width :"255px" , marginTop : "10px"}}>
-                  <select onChange={(event) => handleEventChange(event)} className={styles.select}>
-                    <option  className={styles.iLabel} value={-1}>Payé par</option>
-                    {eventWithoutUserConnectedSelect && eventWithoutUserConnectedSelect.map((participant) => (
-                    <option key={participant.userId} value={participant.userId}>{participant.username}</option>
-                    ))}
-                  </select>
-                </div>
-            </section>
 
-            <section style={{marginBottom : "10px" , display : "flex" , justifyContent :"center" , textAlign : "center"}}>
+
+          <div className={styles.contentContainer}>
+            <div className={styles.leftContentContainer}>
+              <div className={`${styles.inputContainer} ${styles.ic1}`}>
+                  <input autoComplete="off"  type="Label" className={styles.input} id="Label" onChange={handleLabelChange}  />
+                  <div className={styles.cut}></div>
+                  <label className={styles.iLabel} htmlFor="Label">Label</label>
+              </div>
+              <div className={`${styles.inputContainer} ${styles.ic1}`}>
+                  <input autoComplete="off"  type="decimal" min={0} className={styles.input} id="Amount" onChange={handleAmountChange}  />
+                  <div className={styles.cut}></div>
+                  <label className={styles.iLabel} htmlFor="Amount">Montant</label>
+              </div>
+              <p className={styles.translateImg}>€</p>
+              <div className={styles.divContainer}>
+                <select onChange={(event) => handleEventChange(event)} className={styles.select}>
+                  <option  className={styles.iLabel} value={-1}>Payé par</option>
+                  {eventWithoutUserConnectedSelect && eventWithoutUserConnectedSelect.map((participant) => (
+                  <option key={participant.userId} value={participant.userId}>{participant.username}</option>
+                  ))}
+                </select>
+                </div>
+            </div>
+
+            <div>
+              <div className={`${styles.inputContainer} ${styles.ic1}`} >
+                  <input autoComplete="off"  type="text" className={styles.input} id="users" onChange={handleUsers} onClick={() => setDisplayUserInput(true)}/>
+                  {displayUserInput && <DisplayUserinputTransactions participate={eventWithoutUserConnected} setUserChoice={setUserChoice} setDisplayUserInput={setDisplayUserInput} selectAll={isSelectAll} selectList={isSelectList}/>}
+                  <button onClick={() => setDisplayUserInput(false)} className={styles.buttonDelete} >X</button>
+                  <div className={styles.cut}></div>
+                  <label className={styles.iLabel} htmlFor="users">Pour qui </label>
+              </div>
+              <ul className={styles.listUl} >
+              <h1 className={styles.h1Font}>Participants</h1>                            
+                  {userSelected.map((user, index) => (
+                      <li className={styles.listStyle} key={user.userId}>
+                          <span className={styles.spanPlacement}>{user.username}</span>
+                              <button className={styles.buttonStyleParticipate} onClick={() => handleDelete(index)}>X</button>
+                      </li>
+                  ))}
+              </ul>
+            </div>
+          </div>
+
+
+
+
+
+          <div className={styles.footerContainer}>
+            <section className={styles.buttonSubmitContainer}>
                 <button className={styles.submit} onClick={sendForm} type="submit">submit</button>
-            </section>
-
+            </section> 
+          </div>
         </section>
     </>
   );

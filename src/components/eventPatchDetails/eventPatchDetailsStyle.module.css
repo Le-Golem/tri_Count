@@ -10,8 +10,7 @@
 }
 
 .FondFiltre {
-    max-width: 1000px;
-    min-width: 1000px;
+    width: 1000px;
     height: 500px;
     background-color: #15172b;
     border: 1px solid #15172b;
@@ -22,8 +21,48 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
+.sectionContainer {
+  margin-left: 25px;
+}
+
+.pPlacement {
+  margin-top: 10px;
+}
+
+.sectionFooterContainer {
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}
+
+.buttonDeleteStyle {
+  width: 40px;
+  height: 40px;
+  margin : 10px
+}
+
+.divHeaderContainer {
+  display: flex;
+  justify-content: space-between;
+}
+
+.divContainer {
+  display: flex;
+  gap: 10%;
+}
+
+.textarea {
+  width: 600px;
+  height: 600px;
+  margin-top: 10px;
+  resize: none;
+}
 
 .inputContainer {
     height: 50px;
@@ -108,4 +147,49 @@
     margin-top: 38px;
     text-align: center;
     width: 95%;
+  }
+
+  @media screen and (max-width: 3000px) {
+    .FondFiltre {
+      width: 1000px;
+    }
+
+    .textarea {
+      width: 600px;
+      height: 200px;
+    }
+
+    .inputContainer{
+      width: 300px;
+    }
+  }
+
+  @media screen and (max-width: 800px) {
+    .FondFiltre {
+      width: 500px;
+    }
+
+    .textarea {
+      width: 400px;
+      height: 200px;
+    }
+
+    .inputContainer{
+      width: 200px;
+    }
+  }
+
+  @media screen and (max-width: 450px) {
+    .FondFiltre {
+      width: 250px;
+    }
+
+    .textarea {
+      width: 200px;
+      height: 200px;
+    }
+
+    .inputContainer{
+      width: 200px;
+    }
   }

@@ -22,8 +22,8 @@ const ListBalancesComponents = ({ event }: { event: IEventData | undefined }) =>
             </div>) : 
             (
             <div className="transactions-table-container">
-                <div className="no-transactions-message">
-                    <h2>Il n'y a pas de transactions pour le moment.</h2>
+                <div>
+                    <h2 className="fontH2">Il n'y a pas de transactions pour le moment.</h2>
                 </div>
             </div>
             )

@@ -17,23 +17,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className} style={{ margin: 0, position: 'relative' }}>
-        <section
-          style={{
-            position: 'fixed',
-            width: '140px', 
-            height: '100vh', 
-            top: 0, 
-            left: 0, 
-            backgroundColor: '#15172b', 
-          }}
-        >
-          <Navbar />
-        </section>
-        <article style={{ marginLeft: '10%', width: '90%', padding: '20px' }}>
-          <section
-            className='container'
-          >
+      <body className={inter.className}>
+        <article className='articleContainer' >
+          <section className='navbarContainer'>
+            <Navbar />
+          </section>
+          <section className='childrenContainer'>
             {children}
           </section>
         </article>

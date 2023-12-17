@@ -9,12 +9,7 @@
     height: 100%;
 }
 
-.containerNavbar > a:last-child {
-    margin-top: auto; 
-}
-
 .containerNavbar > a {
-    width: 100px;
     height: 80px;
     display: flex;
     align-items: center;
@@ -29,8 +24,16 @@
     color: #1992A6;
 }
 
-.containerNavbar > a p {
-    margin: 0; /* Supprime la marge par défaut du paragraphe */
-    font-size: 14px;
-    font-family: 'Inter', sans-serif;
+@media screen and (max-width: 2560px) {
+    .containerNavbar {
+        flex-direction: row;
+        width: 100%;
+        height: 180px;
+        margin : 0 auto;
+    }
+
+    .containerNavbar > a {
+        height: 130px;
+        width: 30%;
+    }
 }

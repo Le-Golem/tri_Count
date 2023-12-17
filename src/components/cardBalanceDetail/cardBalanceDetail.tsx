@@ -8,9 +8,9 @@ const CardBalanceDetail = ({participate}: {participate: IParticipate | undefined
             <section className={styles.container}>
                 <div className={styles.eventContent}>
                     <div className={styles.header}>
-                        <p style={{textAlign : "center"}} className={styles.fontTitle}>{participate?.username}</p>
+                        <p className={styles.fontTitle}>{participate?.username}</p>
                     </div>
-                    <div style={{marginTop :"40px"}}>
+                    <div className={styles.containerCard}>
                         <p className={styles.balanceLabel}>Balance</p>
                         <p className={participate && participate?.balance > 0 ? styles.positive : styles.negative}>
                             {participate && participate?.balance > 0 ? `+ ${participate?.balance}` : `${participate?.balance}`}

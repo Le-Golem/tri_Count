@@ -10,8 +10,7 @@
 }
 
 .FondFiltre {
-    max-width: 1000px;
-    min-width: 1000px;
+    width: 1000px;
     height: 500px;
     background-color: #15172b;
     border: 1px solid #15172b;
@@ -22,6 +21,23 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+}
+
+.headerContainer {
+  display: flex;
+  justify-content: space-between;
+  padding-left: 10px ;
+}
+
+.contentContainer {
+  margin-left: 30px;
+  width: 800px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.footerContainer {
+  margin-top: 20px;
 }
 
 .inputContainer {
@@ -61,6 +77,16 @@
     transform: translateY(0);
     transition: transform 200ms;
     width: 46px;
+  }
+
+  .listUl {
+    margin: 15px 45px 0 0 ;
+    position: fixed;
+    max-height: 30vh;
+    overflow: auto;
+    width: 25vh;
+    list-style-type: none;
+    padding: 0;
   }
   
   .cutShort {
@@ -162,6 +188,65 @@
   z-index: 3;
 }
 
+.pPlacement {
+  margin-top: 10px;
+}
+
+.buttonStyle{
+  width: 40px;
+  height: 40px;
+  margin : 10px
+}
+
+.buttonDelete {
+  transform: translate(207px,-45px);
+  width: 40px;
+  height: 40px;
+}
+
+.h1Font {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  border-bottom: 2px solid #333;
+  padding-bottom: 5px;
+}
+
+.divContainer {
+  height: 100px ;
+  width: 255px ;
+  margin-top: 10px;
+}
+
+.spanPlacement {
+  margin-right: 10px;
+}
+
+.buttonSubmitContainer {
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}
+
+.buttonStyleParticipate {
+  margin-left: 5px ;
+  padding: 5px 10px ;
+  background-color:#ff5858;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.listStyle {
+  margin-top: 5px ;
+  padding : 10px ; 
+  border-bottom: 1px solid #ccc;
+  display :flex ;
+  justify-content: space-between;
+}
+
 .option {
   color: #eee;
   font-size: 10px;
@@ -169,6 +254,71 @@
   transition: background-color 0.3s ease;
 }
 
+.translateImg {
+  transform: translate(225px , -35px);
+}
+
 .option:hover {
   background-color: #15172b;
+}
+
+
+@media screen and (max-width: 2570px) {
+  .FondFiltre{
+      width: 1000px;
+      height: 500px;
+  }
+}
+
+@media screen and (max-width: 770px) {
+  .FondFiltre{
+      width: 500px;
+      height: 500px;
+  }
+
+  .contentContainer {
+    width: 200px;
+  }
+
+  .input {
+    width: 150px;
+  }
+
+  .select {
+    width: 150px;
+  }
+
+  .translateImg{
+    transform: translate(120px , -35px);
+  }
+}
+
+
+@media screen and (max-width: 430px) {
+  .FondFiltre{
+      width: 300px;
+      height: 500px;
+  }
+
+  .contentContainer {
+    width: 100px;
+    margin-left: 10px ; 
+  }
+
+  .input {
+    width: 100px;
+  }
+
+  .select {
+    width: 100px;
+  }
+
+  .translateImg{
+    transform: translate(80px , -35px);
+  }
+
+  .leftContentContainer{
+    width: 100px;
+    margin-right: 10px;
+  }
 }

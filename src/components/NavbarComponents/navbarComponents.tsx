@@ -1,19 +1,25 @@
 import { INavItem } from "@/core/model/INavItem";
 import styles from "./NavbarStyle.module.css";
+import logoDeconnexion from "../../img/Logo-red-deconnexion.svg"
+import logoHome from "../../img/logo-home.svg"
+import logoEvent from "../../img/logo-reservation.svg"
 
 const Navbar = () => {
   const navBarContent: INavItem[] = [
     {
-      label: "Accueil",
+      label: "A",
       route: "/homePage",
+      navImg : logoHome.src
     },
     {
-      label: "Evenements",
+      label: "E",
       route: "/homePage/eventPage",
+      navImg : logoEvent.src
     },
     {
-      label: "Deconnexion",
+      label: "D",
       route: "http://localhost:3000/",
+      navImg : logoDeconnexion.src,
     },
   ];
 
@@ -25,7 +31,7 @@ const Navbar = () => {
           href={content.route}
           key={content.label}
         >
-          {content.label}
+          <img src={content.navImg} alt="" />
         </a> 
       ))}
     </section>

@@ -3,11 +3,12 @@
     flex-wrap: wrap;
     align-items: flex-start; 
     overflow: auto; 
-    height: 80.8%;
+    height: 80%;
     max-height: 1000px;
     gap : 20px;
     cursor: pointer;
     margin-top: 10px;
+    overflow-x: hidden;
 }
 
 .no-transactions-message {
@@ -23,3 +24,18 @@
     padding: 20px;
     border: 1px solid #ccc;
 }
+
+.buttonContainer{
+    display: flex;
+    position: absolute;
+    bottom: 200px;
+    left: 30px;
+}
+
+@media screen and (max-width: 2560px) {
+    .containerEvent {
+      height: 200px;
+
+    }
+  }
+

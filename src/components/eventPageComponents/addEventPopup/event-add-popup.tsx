@@ -61,12 +61,10 @@ const EventAddPopup = ({setDisplyPopupAddForm , setTrigger , trigger , refreshUs
     const handleLabelChange = (event : any) => {
         setLabel(event.target.value); 
     };
-    console.log(description)
     const handleDescription = (event : any) => {
     let inputValue = event.target.value;
     let cleanedValue = inputValue.replace(/[^\w\s]/gi, '');
     event.target.value = cleanedValue;
-    console.log(cleanedValue)
         setDescription(cleanedValue)
     }
     const handleUsers = (event : any) =>  {
@@ -129,13 +127,13 @@ const EventAddPopup = ({setDisplyPopupAddForm , setTrigger , trigger , refreshUs
     return(
         <>
         <figure onClick={() => setDisplyPopupAddForm(false)} className={styles.backGroud} />
-        <section className={styles.FondFiltre} style={{display : "flex" , flexDirection : "column" , justifyContent:'space-between'}}>
-            <section style={{marginLeft :"25px"}}>
-                <div style={{display : "flex" , justifyContent : "space-between"}}>
-                    <p style={{marginTop : "10px"}}>{titre}</p>
-                    <button onClick={() => setDisplyPopupAddForm(false)}  style={{width : "40px" , height : "40px" , margin : "10px"}}>X</button>
+        <section className={styles.FondFiltre}>
+            <section className={styles.sectionPlacement}>
+                <div className={styles.divHeader}>
+                    <p className={styles.pPlacement}>{titre}</p>
+                    <button onClick={() => setDisplyPopupAddForm(false)} className={styles.buttonStyle}>X</button>
                 </div>
-                <section style={{display : "flex" , gap : "10%"}}>
+                <section className={styles.sectionContainer}>
                     <div className={`${styles.inputContainer} ${styles.ic1}`}>
                         <input autoComplete="off"  type="Label" className={styles.input} id="Label" onChange={handleLabelChange}  />
                         <div className={styles.cut}></div>
@@ -145,34 +143,38 @@ const EventAddPopup = ({setDisplyPopupAddForm , setTrigger , trigger , refreshUs
                     <div className={`${styles.inputContainer} ${styles.ic1}`} >
                         <input autoComplete="off"  type="text" className={styles.input} id="users" onChange={handleUsers} onClick={() => setDisplayUserInput(true)}/>
                         {displayUserInput && <DisplayUserInput usersList={userList} setUserChoice={setUserChoice} setDisplayUserInput={setDisplayUserInput} displayUserInput={displayUserInput} />}
-                        <button onClick={() => setDisplayUserInput(false)} style={{transform: 'translate(207px, -45px)' , width : "40px" , height : "40px"}} >X</button>
+                        <button onClick={() => setDisplayUserInput(false)} className={styles.buttonDeleteStyle}>X</button>
                         <div className={styles.cut}></div>
                         <label className={styles.iLabel} htmlFor="users">users</label>
                     </div>
                     
                     <div>
-                        <ul style={{ margin : "15px 45px 0px 0px", position: "fixed", maxHeight: "35vh", overflow: "auto", width: "25vh", listStyleType: "none", padding: 0 }}>
-                        <h1 style={{ fontSize: "20px", fontWeight: "bold", marginBottom: "10px", borderBottom: "2px solid #333", paddingBottom: "5px" }}>Participants</h1>                            {userSelected.map((user, index) => (
-                                <li style={{ marginTop: "5px", padding: "10px", borderBottom: "1px solid #ccc" , display : "flex" , justifyContent : "space-between" }} key={user.userId}>
-                                    <span style={{ marginRight: "10px" }}>{user.username}</span>
+                        <ul className={styles.sectionList}>
+                        <h1 className={styles.h1Font}>Participants</h1>
+                            <div>
+                            {userSelected.map((user, index) => (
+                                <li className={styles.liFont} key={user.userId}>
+                                    <span className={styles.spanPlacement}>{user.username}</span>
                                     {user.userId !== userConnected?.userId && (
-                                        <button style={{ marginLeft: '5px', padding: "5px 10px", background: "#ff5858", color: "#fff", border: "none", cursor: "pointer", borderRadius: "5px" }} onClick={() => handleDelete(index)}>Supprimer</button>
+                                        <button className={styles.buttonList} onClick={() => handleDelete(index)}>X</button>
                                     )}
                                 </li>
                             ))}
+                            </div>
                         </ul>
                     </div>
+
 
                 </section>
 
                 <div className={`${styles.inputContainer} ${styles.ic1}`}>
-                    <textarea className={styles.textarea} id="description" onChange={handleDescription} style={{ width : "600px" , height : "600px" ,  maxWidth : "600px" , maxHeight : "200px" , minHeight : "50px" , minWidth : "50px" , marginTop : "10px" , resize : "none"}} ></textarea>
+                    <textarea className={styles.textarea} id="description" onChange={handleDescription}></textarea>
                     <div className={styles.cut}></div>
                     <label className={styles.iLabel} htmlFor="description">Description</label>
                 </div>
             </section>
 
-            <section style={{marginBottom : "10px" , display : "flex" , justifyContent :"center" , textAlign : "center"}}>
+            <section className={styles.footerSection}>
                 <button className={styles.submit} onClick={sendForm} type="submit">submit</button>
             </section>
         </section>

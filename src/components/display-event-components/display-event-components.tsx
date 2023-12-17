@@ -4,6 +4,7 @@ import { IEvent } from '@/core/model/IEvent';
 import Popup from '../popup-Yes-or-No/Popup';
 import eventService from '@/core/services/eventService';
 import { IEventData } from '@/core/model/IEventData';
+import deleteLogo from "../../img/logo-delete.svg"
 
 const DisplayEventComponent: React.FC<{ event: IEvent, functionClick: Function , key : number  }> = ({ event, functionClick , key }) => {
     const [displayPopup, setDisplayPopup] = React.useState(false);
@@ -33,14 +34,13 @@ const DisplayEventComponent: React.FC<{ event: IEvent, functionClick: Function ,
                 <div className={styles.header}>
                     <p className={styles.fontTitle}>{event.label}</p>
                     <button
-                        style={{marginLeft: '5px', padding: "5px 10px", background: "#ff5858", color: "#fff", border: "none", cursor: "pointer", borderRadius: "5px" }}
-                        className={styles.deleteButton}
+                        className={styles.containerButton}
                         onClick={(e) => {
                             e.stopPropagation(); 
                             setDisplayPopup(true)
                         }}
                     >
-                        Supprimer
+                        X
                     </button>
                 </div>
                 <p className={styles.fontDescription}>{event.description}</p>

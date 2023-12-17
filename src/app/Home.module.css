@@ -1,3 +1,9 @@
+@font-face { font-family: 'Inter'; src: url("../fonts/Inter-Regular.ttf"); }
+@font-face { font-family: 'Inter-Medium'; src: url("../fonts/Inter-Medium.ttf"); }
+@font-face { font-family: 'Inter-SemiBold'; src: url("../fonts/Inter-SemiBold.ttf"); }
+@font-face { font-family: 'Inter-Bold'; src: url("../fonts/Inter-Bold.ttf"); }
+@font-face { font-family: 'Inter-Black'; src: url("../fonts/Inter-Black.ttf"); }
+
 .container {
   display: flex;
   flex-direction: column;
@@ -11,9 +17,7 @@
   background-color: #15172b;
   border-radius: 20px;
   box-sizing: border-box;
-  height: 500px;
   padding: 20px;
-  width: 320px;
 }
 
 .title {
@@ -69,6 +73,14 @@
   transform: translateY(0);
   transition: transform 200ms;
   width: 76px;
+}
+
+.h1 {
+  font-family: Inter;
+}
+
+.p{
+  font-family: inter-Bold;
 }
 
 .cutShort {
@@ -144,3 +156,30 @@
   color: #eee;
   border-radius: 4px;
 }
+
+@media screen and (max-width: 2560px) {
+  .form {
+    width: 480px;
+  }
+}
+
+@media screen and (max-width: 486px) {
+  .form {
+    width: 300px;
+  }
+  
+}
+
+@media screen and (max-width: 320px) {
+  .form {
+    width: 280px;
+  }
+}
+
+@media screen and (max-height: 530px) {
+  .form {
+    height: 50%;
+  }
+}
+
+

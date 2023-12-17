@@ -87,7 +87,7 @@ const ListTransactionsComponent = ({ event , setEvent }: { event: IEventData | u
 
 
     return (
-        <div className="transactions-table-container">
+        <div>
             {loader ? (
                 <div>
                     <figure style={background}></figure>
@@ -106,6 +106,7 @@ const ListTransactionsComponent = ({ event , setEvent }: { event: IEventData | u
                             <th></th>
                         </tr>
                     </thead>
+                    
                     <tbody>
                         {transactions.map((transaction, index) => (
                             <tr
@@ -127,9 +128,9 @@ const ListTransactionsComponent = ({ event , setEvent }: { event: IEventData | u
                             )}
                             </td>
                             <td>
-                                <button style={{marginLeft: '5px', padding: "5px 10px", background: "#ff5858", color: "#fff", border: "none", cursor: "pointer", borderRadius: "5px" }}
+                                <button className="buttonDeleteStyle"
                                         onClick={() => handleDeleteTransaction(transaction.transactionId)}>
-                                    Supprimer
+                                    X
                                 </button>
                             </td>
                             </tr>
@@ -138,8 +139,8 @@ const ListTransactionsComponent = ({ event , setEvent }: { event: IEventData | u
                 </table>
             </>
             ) : (
-                <div className="no-transactions-message">
-                    <h2>Il n'y a pas de transactions pour le moment.</h2>
+                <div>
+                    <h2 className="fontH2">Il n'y a pas de transactions pour le moment.</h2>
                 </div>
             )}
         </div>
